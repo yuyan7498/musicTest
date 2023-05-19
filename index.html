@@ -60,7 +60,7 @@
             <h2>平均反應速度</h2>
             <h2 id="score"></h2>
             <h2>毫秒</h2>
-            <h2>（</h2>
+            <h2>（約</h2>
             <h2 id="score2"></h2>
             <h2>秒</h2>
             <h2>）</h2>
@@ -255,7 +255,7 @@
                 });
                 score = (score / answers.length).toFixed(2);
                 $("#score").text(score);
-                $("#score2").text(score / 1000);
+                $("#score2").text((score / 1000).toFixed(2));
 
             }, 128000)
         }
