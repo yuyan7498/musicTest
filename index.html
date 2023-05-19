@@ -39,6 +39,7 @@
                 </path>
             </svg>
         </button>
+        <p id="timeLag"></p>
     </div>
 
     <div class="loaderRectangle">
@@ -91,6 +92,7 @@
                 isClick = 1
                 answers.push(currentTime - triangleTime);
                 console.log(currentTime - triangleTime);
+                $('#timeLag').text(currentTime - triangleTime);
             }
 
             itsNowButton.addEventListener("click", recordTime);
@@ -99,6 +101,7 @@
                 itsNowButton.removeEventListener("click", recordTime);
                 if (isClick === 0) {
                     answers.push(2000);
+                    $('#timeLag').text("miss");
                     console.log("miss");
                 } else if (isClick === 1) {
                     isClick = 0;
