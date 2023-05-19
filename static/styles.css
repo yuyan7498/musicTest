@@ -257,3 +257,10 @@ h3 {
         height: 25px;
     }
 }
+
+#average{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
