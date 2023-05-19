@@ -110,6 +110,7 @@
         function playRandomNote() {
             const synth = new Tone.Synth().toDestination();
             var randomNote = notes[getRandomInt(0, 6)]
+            synth.context.resume();
             synth.triggerAttackRelease(randomNote, "0.5n");
         }
 
