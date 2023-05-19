@@ -15,20 +15,21 @@
     <audio src="./triangle.mp3"></audio>
 
     <div id="startMenu">
-        <h1>反應測驗工具</h1>
-        <button id="startGame" onclick="startGame()">
+        <h1>聽覺反應力測驗</h1>
+        <button id="intoTest" onclick="intoTest()">
             <span class="button_top">
-                <h1>開始測驗</h1>
+                <h1>進入測驗</h1>
             </span>
         </button>
     </div>
 
-    <div id="counter">
+    <div id="prepare">
         <h3>請在聽到三角鐵聲音時按下按鈕</h3>
-    </div>
-
-    <div>
-        <h1 id="counter2">3</h1>
+        <button id="startGame" onclick="startGame()">
+            <span class="button_top">
+                <h1>準備好了</h1>
+            </span>
+        </button>
     </div>
 
     <div id="test">
@@ -39,7 +40,8 @@
                 </path>
             </svg>
         </button>
-        <p id="timeLag"></p>
+        
+        <h1 id="timeLag">聽到聲音點擊</h1>
     </div>
 
     <div class="loaderRectangle">
@@ -53,7 +55,7 @@
     <div id="conclusion">
         <h1>成績</h1>
         <p>單位：毫秒</p>
-        <div id="mainChart" style="width: 1000px;height:400px;"></div>
+        <div id="mainChart" style="width: 1000px;height:200px;"></div>
         <div id="average">
             <h2>平均反應速度</h2>
             <h2 id="score"></h2>
@@ -70,8 +72,7 @@
         $(document).ready(function () {
             $("#test").hide();
             $("#startMenu").hide();
-            $('#counter').hide();
-            $('#counter2').hide();
+            $('#prepare').hide();
             $("#startMenu").fadeIn(1000);
             $('.loaderRectangle').hide();
             $('#conclusion').hide();
@@ -92,7 +93,7 @@
                 isClick = 1
                 answers.push(currentTime - triangleTime);
                 console.log(currentTime - triangleTime);
-                $('#timeLag').text(currentTime - triangleTime);
+                $('#timeLag').text(currentTime - triangleTime + '毫秒');
             }
 
             itsNowButton.addEventListener("click", recordTime);
@@ -194,35 +195,25 @@
             });
         }
 
-        function startGame() {
+        function intoTest() {
             $("#startMenu").fadeOut(1000);
             setTimeout(function () {
-                $('#counter').fadeIn(1000);
+                $('#prepare').fadeIn(1000);
             }, 1000)
-            setTimeout(function () {
-                $('#counter').fadeOut(1000);
-            }, 2000)
-            setTimeout(function () {
-                $('#counter2').fadeIn(1000);
-            }, 3000)
-            setTimeout(function () {
-                $('#counter2').text("2");
-            }, 4000)
-            setTimeout(function () {
-                $('#counter2').text("1");
-            }, 5000)
-            setTimeout(function () {
-                $('#counter2').fadeOut(1000);
-            }, 6000)
-            setTimeout(function () {
-                $('#test').fadeIn(1000);
-                playMusic();
-                randomPlayAudio();
-            }, 7000)
+
+        }
+
+        function startGame() {
+            $('#prepare').hide();
+            $('#test').show();
+            playMusic();
+            randomPlayAudio();
+
+
             setTimeout(function () {
                 $('#test').hide();
                 $('.loaderRectangle').show();
-            }, 127000)
+            }, 120000)
             setTimeout(function () {
                 $('.loaderRectangle').hide();
                 $('#conclusion').show();
@@ -262,7 +253,6 @@
                 $("#score").text(score);
 
             }, 128000)
-
         }
 
 

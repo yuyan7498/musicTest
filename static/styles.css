@@ -30,6 +30,12 @@ h3 {
     align-items: center;
 }
 
+#intoTest .button_top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 #startGame .button_top {
     display: flex;
     flex-direction: column;
@@ -37,11 +43,26 @@ h3 {
     align-items: center;
 }
 
-#counter {
+#prepare {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center ;
+}
+
+#intoTest {
+    /* Variables */
+    width: 50vw;
+    height: 10vh;
+    --button_radius: 0.75em;
+    --button_color: #e8e8e8;
+    --button_outline_color: #000000;
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--button_radius);
+    background: var(--button_outline_color);
 }
 
 #startGame {
@@ -72,6 +93,16 @@ h3 {
     width: 50vw;
 }
 
+#intoTest:hover .button_top {
+    /* Pull the button upwards when hovered */
+    transform: translateY(-0.33em);
+}
+
+#intoTest:active .button_top {
+    /* Push the button downwards when pressed */
+    transform: translateY(0);
+}
+
 #startGame:hover .button_top {
     /* Pull the button upwards when hovered */
     transform: translateY(-0.33em);
@@ -81,7 +112,6 @@ h3 {
     /* Push the button downwards when pressed */
     transform: translateY(0);
 }
-
 
 .testButton {
     width: 40vw;
@@ -139,13 +169,13 @@ h3 {
     }
 }
 
-.testButton:hover .bell {
+/* .testButton:hover .bell {
     animation: bellRing 0.9s both;
 }
 
 .testButton:active{
     transform: scale(0.8);
-}
+} */
 
 
 .loaderRectangle {
@@ -261,6 +291,13 @@ h3 {
 #average{
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#test{
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
