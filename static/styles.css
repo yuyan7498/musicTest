@@ -1,5 +1,6 @@
 body {
     height: 100vh;
+    width: 100vw;
     margin: 0;
     padding: 0;
     display: flex;
@@ -7,6 +8,27 @@ body {
     align-items: center;
 }
 
+h1{
+    font-size: 70px;
+}
+
+h3{
+    font-size: 40px;
+}
+
+#startMenu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#startGame .button_top{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 #counter {
     height: 100%;
     display: flex;
@@ -16,7 +38,8 @@ body {
 
 #startGame {
     /* Variables */
-    width: 200px;
+    width: 50vw;
+    height: 10vh;
     --button_radius: 0.75em;
     --button_color: #e8e8e8;
     --button_outline_color: #000000;
@@ -35,9 +58,10 @@ body {
     padding: 0.75em 1.5em;
     background: var(--button_color);
     color: var(--button_outline_color);
-    transform: translateY(-0.2em);
+    transform: translateY(-0.6em);
     transition: transform 0.1s ease;
-    width: 200px;
+    height: 10vh;
+    width: 50vw;
 }
 
 #startGame:hover .button_top {
@@ -52,8 +76,8 @@ body {
 
 
 .testButton {
-    width: 150px;
-    height: 150px;
+    width: 40vw;
+    height: 40vw;
     position: relative;
     display: flex;
     align-items: center;
@@ -67,7 +91,7 @@ body {
 }
 
 .bell {
-    width: 70px;
+    width: 20vw;
 }
 
 .bell path {
@@ -107,10 +131,10 @@ body {
     }
 }
 
-.testButton:hover .bell {
+.testButton:active .bell {
     animation: bellRing 0.9s both;
 }
 
-.testButton:active{
-    transform: scale(0.8);
-}
+/* .testButton:active{
+    transform: scale(0.8) 0.3s;
+} */
