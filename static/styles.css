@@ -139,13 +139,13 @@ h3 {
     }
 }
 
-.testButton:active .bell {
+.testButton:hover .bell {
     animation: bellRing 0.9s both;
 }
 
-/* .testButton:active{
-    transform: scale(0.8) 0.3s;
-} */
+.testButton:active{
+    transform: scale(0.8);
+}
 
 
 .loaderRectangle {
