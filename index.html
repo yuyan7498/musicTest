@@ -8,6 +8,9 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js"
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.0/fastclick.min.js"
+        integrity="sha512-oljyd1wg75alHReTpDvNIQ4Yj1wZwGxxZhJhId3vr2dKY+26/r/wmMrImwDgin03+7wxyhX+adOQB/2BTvO5tQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -40,7 +43,7 @@
                 </path>
             </svg>
         </button>
-        
+
         <h1 id="timeLag">聽到三角鐵的聲音請點擊</h1>
     </div>
 
@@ -80,6 +83,9 @@
             $("#startMenu").fadeIn(1000);
             $('.loaderRectangle').hide();
             $('#conclusion').hide();
+            $(function () {
+                FastClick.attach(document.body);
+            });
         });
 
 
