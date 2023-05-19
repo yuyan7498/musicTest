@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
 </head>
 
 <body>
@@ -16,7 +17,7 @@
     <div id="startMenu">
         <h1>反應測驗工具</h1>
         <button id="startGame" onclick="startGame()">
-            <span class="button_top"> 
+            <span class="button_top">
                 <h1>開始測驗</h1>
             </span>
         </button>
@@ -40,6 +41,29 @@
         </button>
     </div>
 
+    <div class="loaderRectangle">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div id="conclusion">
+        <h1>成績</h1>
+        <p>單位：毫秒</p>
+        <div id="mainChart" style="width: 1000px;height:600px;"></div>
+        <div id="average">
+            <h1>平均反應速度</h1>
+            <h1 id="score"></h1>
+            <h1>毫秒</h1>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.2/echarts.min.js"></script>
+
+
     <script>
 
         $(document).ready(function () {
@@ -48,6 +72,8 @@
             $('#counter').hide();
             $('#counter2').hide();
             $("#startMenu").fadeIn(1000);
+            $('.loaderRectangle').hide();
+            $('#conclusion').hide();
         });
 
 
@@ -72,7 +98,7 @@
             setTimeout(() => {
                 itsNowButton.removeEventListener("click", recordTime);
                 if (isClick === 0) {
-                    answers.push("miss");
+                    answers.push(2000);
                     console.log("miss");
                 } else if (isClick === 1) {
                     isClick = 0;
@@ -190,7 +216,52 @@
                 playMusic();
                 randomPlayAudio();
             }, 7000)
+            setTimeout(function () {
+                $('#test').hide();
+                $('.loaderRectangle').show();
+            }, 127000)
+            setTimeout(function () {
+                $('.loaderRectangle').hide();
+                $('#conclusion').show();
+
+                var chartDom = document.getElementById('mainChart');
+                var myChart = echarts.init(chartDom);
+                var option;
+
+                var chartX = []
+                for (var i = 1; i < 31; i++) {
+                    chartX.push(i);
+                }
+
+                option = {
+                    xAxis: {
+                        type: 'category',
+                        data: chartX
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            data: answers,
+                            type: 'line'
+                        }
+                    ]
+                };
+
+                option && myChart.setOption(option);
+
+                var score = 0;
+                answers.forEach(element => {
+                    score += element;
+                });
+                score = (score / 30).toFixed(2);
+                $("#score").text(score);
+
+            }, 128000)
+
         }
+
 
     </script>
 </body>
