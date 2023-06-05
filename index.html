@@ -19,6 +19,11 @@
 
     <div id="startMenu">
         <h1>聽覺反應力測驗</h1>
+        <div id="timeSet">
+            <h3>持續時間：</h3>
+            <input type="number" id="timeDur" name="timeDur" value="120">
+            <h3>秒</h3>
+        </div>
         <button id="intoTest" onclick="intoTest()">
             <span class="button_top">
                 <h1>進入測驗</h1>
@@ -28,6 +33,7 @@
 
     <div id="prepare">
         <h3>請在聽到三角鐵聲音時按下按鈕</h3>
+        <h3 id="timeAndNum"></h3>
         <button id="startGame" onclick="startGame()">
             <span class="button_top">
                 <h1>準備好了</h1>
@@ -68,6 +74,15 @@
             <h2>秒</h2>
             <h2>）</h2>
         </div>
+        <div id="detail">
+            <button class="conclusionBtn" id="showDetail" onclick="showDetail()">
+                詳細成績
+            </button>
+            <table id="detailTable"></table>
+            <button class="conclusionBtn" id="download" onclick="download()">
+                下載成績
+            </button>
+        </div>
     </div>
 
 
@@ -92,6 +107,8 @@
         var notes = ["C3", "D3", "E3", "F3", "G3", "A3", "B3"];
         const itsNowButton = document.getElementById("timeRecorder");
         var answers = [];
+        var timeDur = 120;
+        var tirNum = 30;
 
         function startRecorder(triangleTime) {
 
@@ -121,6 +138,7 @@
             }, 2000);
         }
 
+
         function playRandomNote() {
             const synth = new Tone.Synth().toDestination();
             var randomNote = notes[getRandomInt(0, 6)]
@@ -128,7 +146,7 @@
         }
 
         function playMusic() {
-            for (var timeIndex = 0; timeIndex < 120000; timeIndex += 500) {
+            for (var timeIndex = 0; timeIndex < timeDur * 1000; timeIndex += 500) {
                 setTimeout(function () {
                     playRandomNote();
                 }, timeIndex);
@@ -152,8 +170,8 @@
         function randTheSound() {
             var randNotesList = [];
             removeList = [];
-            for (var i = 0; i < 30; i++) {
-                randNotesList.push(getRandomInt(3, 119));
+            for (var i = 0; i < tirNum; i++) {
+                randNotesList.push(getRandomInt(3, timeDur));
             }
             randNotesList.sort(function (a, b) {
                 if (a > b) return 1;
@@ -179,7 +197,7 @@
             for (var j = 0; j < removeList.length; j++) {
                 for (var listI = 0; listI < randNotesList.length - 1; listI++) {
                     if (randNotesList[listI + 1] - randNotesList[listI] > 4) {
-                        randNotesList.push(getRandomInt(randNotesList[listI] + 3, randNotesList[listI + 1] - 3));
+                        randNotesList.push(getRandomInt(randNotesList[listI] + 2, randNotesList[listI + 1] - 2));
                         randNotesList.sort(function (a, b) {
                             if (a > b) return 1;
                             if (a < b) return -1;
@@ -190,12 +208,21 @@
                 }
             }
 
+            for(j = 0; j < tirNum - randNotesList.length; j++){
+                if (randNotesList[0] - 0 > 4){
+                    randNotesList.push(getRandomInt(0 + 2, randNotesList[0] - 2));
+                }else if (timeDur - randNotesList[randNotesList.length - 1]){
+                    randNotesList.push(getRandomInt(randNotesList[randNotesList.length - 1] + 2, timeDur))
+                }
+            }
+
+
+
             return randNotesList;
 
         }
 
         function randomPlayAudio() {
-            timeIndex = randTheSound();
             timeIndex.forEach(element => {
                 setTimeout(function () {
                     playAudio();
@@ -206,9 +233,14 @@
         }
 
         function intoTest() {
+            timeDur = $('#timeDur').val();
+            tirNum = Math.round(timeDur / 4);
+            timeIndex = randTheSound();
+            tirNum = timeIndex.length;
             $("#startMenu").fadeOut(1000);
             setTimeout(function () {
                 $('#prepare').fadeIn(1000);
+                $('#timeAndNum').text("持續時間：" + timeDur + "秒 三角鐵聲音：" + tirNum + "個");
             }, 1000)
 
         }
@@ -223,17 +255,19 @@
             setTimeout(function () {
                 $('#test').hide();
                 $('.loaderRectangle').show();
-            }, 120000)
+            }, timeDur * 1000)
             setTimeout(function () {
                 $('.loaderRectangle').hide();
                 $('#conclusion').show();
+                $('#detailTable').hide();
+                $('#download').hide();
 
                 var chartDom = document.getElementById('mainChart');
                 var myChart = echarts.init(chartDom);
                 var option;
 
                 var chartX = []
-                for (var i = 1; i < 31; i++) {
+                for (var i = 1; i <= tirNum; i++) {
                     chartX.push(i);
                 }
 
@@ -263,7 +297,22 @@
                 $("#score").text(score);
                 $("#score2").text((score / 1000).toFixed(2));
 
-            }, 128000)
+                $("#detailTable").append("<tr><td>序</td><td>反應時間</td></tr>")
+
+                for (var i = 1; i <= answers.length; i++) {
+                    $("#detailTable").append("<tr><td>" + i + "</td>" + "<td>" + answers[i - 1] + "毫秒" + "</td></tr>")
+                }
+
+                $("#detailTable").append("<tr><td>" + "平均" + "</td>" + "<td>" + score + "毫秒" + "</td></tr>")
+
+
+            }, timeDur * 1000 + 5000)
+        }
+
+        function showDetail() {
+            $('#showDetail').hide();
+            $('#detailTable').fadeIn(500);
+            $('#download').fadeIn(500);
         }
 
 
