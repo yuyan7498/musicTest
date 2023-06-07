@@ -111,6 +111,7 @@
         var answers = [];
         var timeDur = 120;
         var tirNum = 30;
+        var myChart;
 
         function startRecorder(triangleTime) {
 
@@ -263,7 +264,7 @@
                 $('#download').hide();
 
                 var chartDom = document.getElementById('mainChart');
-                var myChart = echarts.init(chartDom);
+                myChart = echarts.init(chartDom);
                 var option;
 
                 var chartX = []
@@ -316,9 +317,19 @@
         }
 
         function download() {
+            //下載成績
             $('#detailTable').table2excel({
                 filename: 'myExcelFile.xls'
             });
+            //下載圖表
+            var imageData = myChart.getDataURL();  // 獲取圖表的Base64圖片數據
+            var downloadLink = document.createElement('a');
+            downloadLink.href = imageData;
+            downloadLink.download = 'myChart.png';  // 下載的圖片文件名稱
+            downloadLink.style.display = 'none';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
         }
 
 
