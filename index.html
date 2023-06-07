@@ -5,8 +5,6 @@
     <title>琦琦的音樂測驗！</title>
     <link rel="stylesheet" href="./static/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"
-        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.0/fastclick.min.js"
         integrity="sha512-oljyd1wg75alHReTpDvNIQ4Yj1wZwGxxZhJhId3vr2dKY+26/r/wmMrImwDgin03+7wxyhX+adOQB/2BTvO5tQ=="
@@ -85,13 +83,17 @@
         </div>
     </div>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/rainabba/jquery-table2excel/dist/jquery.table2excel.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.1.2/echarts.min.js"></script>
 
 
     <script>
 
         $(document).ready(function () {
+
+
+
             $("#test").hide();
             $("#startMenu").hide();
             $('#prepare').hide();
@@ -119,7 +121,6 @@
                 itsNowButton.removeEventListener("click", recordTime);
                 isClick = 1
                 answers.push(currentTime - triangleTime);
-                console.log(currentTime - triangleTime);
                 $('#timeLag').text(currentTime - triangleTime + '毫秒');
             }
 
@@ -130,7 +131,6 @@
                 if (isClick === 0) {
                     answers.push(2000);
                     $('#timeLag').text("MISS");
-                    console.log("MISS");
                 } else if (isClick === 1) {
                     isClick = 0;
                 }
@@ -208,10 +208,10 @@
                 }
             }
 
-            for(j = 0; j < tirNum - randNotesList.length; j++){
-                if (randNotesList[0] - 0 > 4){
+            for (j = 0; j < tirNum - randNotesList.length; j++) {
+                if (randNotesList[0] - 0 > 4) {
                     randNotesList.push(getRandomInt(0 + 2, randNotesList[0] - 2));
-                }else if (timeDur - randNotesList[randNotesList.length - 1]){
+                } else if (timeDur - randNotesList[randNotesList.length - 1]) {
                     randNotesList.push(getRandomInt(randNotesList[randNotesList.length - 1] + 2, timeDur))
                 }
             }
@@ -313,6 +313,12 @@
             $('#showDetail').hide();
             $('#detailTable').fadeIn(500);
             $('#download').fadeIn(500);
+        }
+
+        function download() {
+            $('#detailTable').table2excel({
+                filename: 'myExcelFile.xls'
+            });
         }
 
 
