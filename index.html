@@ -80,6 +80,9 @@
             <button class="conclusionBtn" id="download" onclick="download()">
                 下載成績
             </button>
+            <button class="conclusionBtn" id="downloadChart" onclick="downloadChart()">
+                下載圖表
+            </button>
         </div>
     </div>
 
@@ -262,6 +265,7 @@
                 $('#conclusion').show();
                 $('#detailTable').hide();
                 $('#download').hide();
+                $('#downloadChart').hide();
 
                 var chartDom = document.getElementById('mainChart');
                 myChart = echarts.init(chartDom);
@@ -311,9 +315,13 @@
         }
 
         function showDetail() {
-            $('#showDetail').hide();
-            $('#detailTable').fadeIn(500);
-            $('#download').fadeIn(500);
+            $('#showDetail').fadeOut(500);
+            setTimeout(() => {
+                $('#detailTable').fadeIn(500);
+                $('#download').fadeIn(500);
+                $('#downloadChart').fadeIn(500);
+            }, 500)
+
         }
 
         function download() {
@@ -321,6 +329,9 @@
             $('#detailTable').table2excel({
                 filename: 'myExcelFile.xls'
             });
+        }
+
+        function downloadChart() {
             //下載圖表
             var imageData = myChart.getDataURL();  // 獲取圖表的Base64圖片數據
             var downloadLink = document.createElement('a');

@@ -346,6 +346,7 @@ h3 {
     -webkit-user-select: none;
     touch-action: manipulation;
     will-change: transform;
+    margin: 10px;
 }
 
 .conclusionBtn:disabled {
