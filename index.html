@@ -31,6 +31,12 @@
 
     <div id="prepare">
         <h3>請在聽到三角鐵聲音時按下按鈕</h3>
+        <div class="row" id="nameAndBir">
+            <h3>姓名：</h3>
+            <input type="text" id="userName" value="" />
+            <h3>生日：</h3>
+            <input type="date" id="userBir" value="" />
+        </div>
         <h3 id="timeAndNum"></h3>
         <button id="startGame" onclick="startGame()">
             <span class="button_top">
@@ -109,12 +115,19 @@
         });
 
 
-        var notes = ["C3", "D3", "E3", "F3", "G3", "A3", "B3"];
         const itsNowButton = document.getElementById("timeRecorder");
         var answers = [];
         var timeDur = 120;
         var tirNum = 30;
         var myChart;
+        var userName;
+        var userBir;
+        //tone.js設定
+        var notes = ["C3", "D3", "E3", "F3", "G3", "A3", "B3"];
+        const player = new Tone.Player().toDestination();
+        player.load('./triangle.mp3');
+        player.volume.value = -6;
+        const synth = new Tone.Synth().toDestination();
 
         function startRecorder(triangleTime) {
 
@@ -144,7 +157,6 @@
 
 
         function playRandomNote() {
-            const synth = new Tone.Synth().toDestination();
             var randomNote = notes[getRandomInt(0, 6)]
             synth.triggerAttackRelease(randomNote, "0.5n");
         }
@@ -164,8 +176,6 @@
         }
 
         function playAudio() {
-            const player = new Tone.Player().toDestination();
-            player.load('./triangle.mp3');
             Tone.loaded().then(() => {
                 player.start();
             });
@@ -244,7 +254,7 @@
             $("#startMenu").fadeOut(1000);
             setTimeout(function () {
                 $('#prepare').fadeIn(1000);
-                $('#timeAndNum').text("持續時間：" + timeDur + "秒 三角鐵聲音：" + tirNum + "個");
+                $('#timeAndNum').text("測驗時間：" + timeDur + " 秒 三角鐵聲音：" + tirNum + "個");
             }, 1000)
 
         }
@@ -254,6 +264,8 @@
             $('#test').show();
             playMusic();
             randomPlayAudio();
+            userName = $('#userName').val();
+            userBir = $('#userBir').val();
 
 
             setTimeout(function () {
@@ -294,6 +306,11 @@
 
                 option && myChart.setOption(option);
 
+                // 獲取測驗時間
+                const testDate = new Date((new Date()).valueOf());
+                testTime = testDate.getFullYear() + '/' + (testDate.getMonth() + 1) + '/' + testDate.getDate();
+                console.log(testTime);
+
                 var score = 0;
                 answers.forEach(element => {
                     score += element;
@@ -301,6 +318,9 @@
                 score = (score / answers.length).toFixed(2);
                 $("#score").text(score);
                 $("#score2").text((score / 1000).toFixed(2));
+
+                $("#detailTable").append("<tr><td>" + userName + "</td>" + "<td>" + userBir + "</td></tr>")
+                $("#detailTable").append("<tr><td>" + "測驗時間" + "</td>" + "<td>" + testTime + "</td></tr>")
 
                 $("#detailTable").append("<tr><td>序</td><td>反應時間</td></tr>")
 
@@ -327,7 +347,7 @@
         function download() {
             //下載成績
             $('#detailTable').table2excel({
-                filename: 'myExcelFile.xls'
+                filename: 'myExcelFile.xlsx'
             });
         }
 

@@ -310,6 +310,10 @@ h3 {
     align-items: center;
 }
 
+#timeSet input{
+    margin: 10px;
+}
+
 #timeDur {
     height: 50px;
     width: 100px;
@@ -377,3 +381,27 @@ h3 {
     padding: 30px;
 }
 
+#detailTable tr td{
+    padding: 10px;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#nameAndBir{
+    height: 50px;
+}
+
+#nameAndBir input{
+    height: 30px;
+    width: 100px;
+    margin: 30px;
+}
+
+#nameAndBir h3{
+    font-size: 30px;
+}
